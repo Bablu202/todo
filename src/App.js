@@ -22,9 +22,13 @@ export default function App() {
       return each;
     });
     setToDos(newTasks);
-    console.log(newTasks);
+    //console.log(newTasks);
   };
-  const deleteTodo = (todoID) => {};
+  const deleteTodo = (todoID) => {
+    let afterDeleteTasks = [...toDos].filter((each) => each.id !== todoID);
+
+    setToDos(afterDeleteTasks);
+  };
   const todoListMapping = toDos.map((each) => (
     <li className={each.status ? "done" : ""} key={each.id}>
       {each.title}
