@@ -1,3 +1,8 @@
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
 .App {
   text-align: center;
 }
@@ -7,38 +12,33 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.appBody {
+  background-color: #282c34;
 }
-
+.todoName {
+  color: #8c91da;
+  text-align: center;
+}
 .App_header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.inputForm {
+  width: 200px;
+  align-self: center;
+}
 .App_link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 li {
   background-color: rgba(162, 172, 172, 0.185);
-  margin: 0px 100px 0px 0px;
+  margin: 0px 10px 0px 0px;
   padding: 2px 5px 5px 50px;
   border: 1px solid rgba(0, 0, 255, 0);
   border-radius: 10px;
@@ -60,13 +60,14 @@ li {
 .btn:active {
   transform: scale(95%);
 }
-.ul {
-}
+
 .todo_list {
+  height: 250px;
   list-style: none;
   display: flex;
   flex-direction: column;
   row-gap: 5px;
+  text-align: center;
 }
 .todo_list_button,
 .inlist_btn {
@@ -83,5 +84,5 @@ li {
   background-color: rgb(238, 84, 79);
 }
 .green {
-  background-color: rgb(76, 116, 68);
+  background-color: rgb(102, 245, 73);
 }

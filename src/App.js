@@ -1,73 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { Route } from "react-router-dom";
 import "./App.css";
+import Todo from "./components/Todo";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+
 export default function App() {
-  //list of to-dos state
-  const [toDos, setToDos] = useState([
-    { id: 1, title: "react", status: false },
-    { id: 2, title: "to FrontEnd", status: false },
-  ]);
-
-  const [inputTodo, setInputTodo] = useState("");
-  //Mark todo is Done
-  let markDone = (todoID) => {
-    let newTasks = toDos.map((each) => {
-      if (each.id === todoID) {
-        return {
-          ...toDos,
-          status: !each.status,
-          id: each.id,
-          title: each.title,
-        };
-      }
-      return each;
-    });
-    setToDos(newTasks);
-    //console.log(newTasks);
-  };
-  const deleteTodo = (todoID) => {
-    let afterDeleteTasks = [...toDos].filter((each) => each.id !== todoID);
-
-    setToDos(afterDeleteTasks);
-  };
-  const todoListMapping = toDos.map((each) => (
-    <li className={each.status ? "done" : ""} key={each.id}>
-      {each.title}
-      <div className="todo_list_button ">
-        <button className="btn " onClick={(e) => markDone(each.id)}>
-          done
-        </button>
-        <button className="btn ">edit</button>
-        <button className="btn " onClick={(e) => deleteTodo(each.id)}>
-          delete
-        </button>
-      </div>
-    </li>
-  ));
-  //add button
-  const addInputValue = (e) => {
-    e.preventDefault();
-    if (inputTodo) {
-      let idToNewToDo = toDos.length + 1;
-      let newEntry = { id: idToNewToDo, title: inputTodo, status: false };
-      setToDos([...toDos, newEntry]);
-      setInputTodo("");
-    }
-  };
+  //list of to-dos data
   return (
-    <div className="App_header">
-      <h3>ToDos</h3>
-      <form>
-        <input
-          value={inputTodo}
-          onChange={(e) => {
-            setInputTodo(e.target.value);
-          }}
-        />
-        <button onClick={addInputValue} className="btn">
-          add
-        </button>
-      </form>
-      <ul className="todo_list">{todoListMapping}</ul>
+    <div>
+      <div>
+        <Todo />
+        <Link to="/Contact">Contact</Link>
+      </div>
+
+      <Route path="./" element={About} />
+      <Route path="./contact" element={Contact} />
     </div>
   );
 }
