@@ -29,7 +29,6 @@
   color: white;
 }
 .inputForm {
-  width: 200px;
   align-self: center;
 }
 .App_link {
@@ -48,26 +47,25 @@ li {
 .btn {
   background-color: rgb(106, 106, 219);
   border: none;
-  padding: 5px;
   margin: 5px 5px;
   border-radius: 5px;
   align-items: center;
-  text-align: center;
+  color: white;
 }
 .btn:hover {
   background-color: rgb(233, 233, 233);
+  color: #282c34;
 }
 .btn:active {
   transform: scale(95%);
 }
 
 .todo_list {
-  height: 250px;
+  height: 95vh;
   list-style: none;
   display: flex;
   flex-direction: column;
   row-gap: 5px;
-  text-align: center;
 }
 .todo_list_button,
 .inlist_btn {
@@ -85,4 +83,12 @@ li {
 }
 .green {
   background-color: rgb(102, 245, 73);
+}
+
+.nav_heading {
+  display: block;
+  background-color: rgba(117, 159, 248, 0.404);
+}
+.text_context_sub {
+  margin: 10% 40% 10% 10%;
 }
