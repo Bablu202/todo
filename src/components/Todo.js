@@ -1,7 +1,15 @@
-import { collection, onSnapshot, QuerySnapshot } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  onSnapshot,
+  QuerySnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { query } from "firebase/firestore";
+import { query, doc } from "firebase/firestore";
 import { db } from "../firebase";
+import { async } from "@firebase/util";
 export default function Todo() {
   //let getLocalData = JSON.parse(localStorage.getItem("toDos"));
 
@@ -31,34 +39,27 @@ export default function Todo() {
   }, []);
 
   //Mark todo is Done
-  let markDone = (todoID) => {
-    let newTasks = toDos.map((each) => {
-      if (each.id === todoID) {
-        return {
-          ...toDos,
-          status: !each.status,
-          id: each.id,
-          title: each.title,
-        };
-      }
-      return each;
+  const markDone = async (each) => {
+    await updateDoc(doc(db, "todos", each.id), {
+      status: !each.status,
     });
-    setToDos(newTasks);
   };
   //delete todos from the data
-  const deleteTodo = (todoID) => {
-    let afterDeleteTasks = [...toDos].filter((each) => each.id !== todoID);
-    setToDos(afterDeleteTasks);
+  const deleteTodo = async (each) => {
+    await deleteDoc(doc(db, "todos", each));
   };
   //add button Handler
-  const addInputValue = (e) => {
+  const addInputValue = async (e) => {
     e.preventDefault();
-    if (inputTodo) {
-      let idToNewToDo = toDos.length + 1;
-      let newEntry = { id: idToNewToDo, title: inputTodo, status: false };
-      setToDos([...toDos, newEntry]);
-      setInputTodo("");
+    if (inputTodo === "") {
+      alert("please enter a valid TODO");
+      return;
     }
+    await addDoc(collection(db, "todos"), {
+      title: inputTodo,
+      status: false,
+    });
+    setInputTodo("");
   };
   //update editied TODO Task
   const changeEditedTask = (e) => {
@@ -67,23 +68,24 @@ export default function Todo() {
       title: e.target.value,
       status: editInputData.status ? true : false,
     };
+
     setEditInputData(newTask);
     console.log(newTask);
   };
-  //Update list after edit Update Handler
-  const updateList = () => {
-    console.log(editInputData);
-    let filterToDos = [...toDos].filter((each) => each.id !== editInputData.id);
 
-    let afterUpdate = [...filterToDos, editInputData];
-    setToDos(afterUpdate);
-    console.log(editInputData);
+  //Update list after edit Update Handler
+  const updateList = async (e) => {
+    e.preventDefault();
+    await updateDoc(doc(db, "todos", editInputData.id), {
+      title: editInputData.title,
+      status: false,
+    });
     setEditInputData("");
   };
   //calcel Button Handler
-  const cancelUpadate = (e) => {
+  const cancelUpadate = async (e) => {
     e.preventDefault();
-    setEditInputData("");
+    await setEditInputData("");
   };
   // from TODO list mapping and diplaying tasks
   const todoListMapping = toDos.map((each) => (
@@ -91,10 +93,6 @@ export default function Todo() {
       <li className={each.status ? "done" : ""} key={each.id}>
         {each.title}
         <div className="todo_list_button ">
-          {/*DONE Button*/}
-          <button className="btn green" onClick={(e) => markDone(each.id)}>
-            done
-          </button>
           {/*EDIT Button*/}
           {!each.status ? (
             <button
@@ -112,6 +110,10 @@ export default function Todo() {
           ) : (
             ""
           )}
+          {/*DONE Button*/}
+          <button className="btn green" onClick={(e) => markDone(each)}>
+            done
+          </button>
           {/*DELETE Button*/}
           <button className="btn red" onClick={(e) => deleteTodo(each.id)}>
             delete

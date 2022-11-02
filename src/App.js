@@ -11,14 +11,12 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { Protected } from "./components/Protected";
 export default function App() {
   //list of to-dos data
-
-  return (
+  /* return (
     <div>
       <Todo />
     </div>
-  );
-
-  /*return (
+  );*/
+  return (
     <div>
       <AuthContextProvider>
         <NavHeading />
@@ -37,5 +35,4 @@ export default function App() {
       </AuthContextProvider>
     </div>
   );
-  */
 }
