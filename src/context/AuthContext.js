@@ -8,6 +8,7 @@ import {
   updateCurrentUser,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import { FaxSharp } from "@mui/icons-material";
 
 const AuthContext = createContext();
 
@@ -23,6 +24,8 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (updateCurrentUser) => {
       setUser(updateCurrentUser);
+
+      //console.log(updateCurrentUser.email);
     });
     return () => {
       unsubscribe();
