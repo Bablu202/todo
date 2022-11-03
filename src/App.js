@@ -1,4 +1,3 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
